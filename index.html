@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Дикий сайт</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            background: linear-gradient(135deg, #324f75, #1a2a3a);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Стили для поиска */
+        .search-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: 2px solid #ffd700;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            font-size: 14px;
+            width: 250px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            background: white;
+            box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .search-button {
+            background: #ffd700;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-button:hover {
+            background: #ffed4a;
+            transform: scale(1.1);
+        }
+
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffd700;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .tab-button.active {
+            border-bottom: 3px solid #ffd700;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Подвкладки Tisquired */
+        .artist-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .artist-tab-button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .artist-tab-button.active {
+            border-bottom: 3px solid #ffd700;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .artist-tab-button:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .artist-tab-content {
+            display: none;
+        }
+
+        .artist-tab-content.active {
+            display: block;
+        }
+
+        /* Верхняя секция */
+        .top-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .top-section img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            margin-right: 20px;
+            border: 3px solid #ffd700;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #ffd700;
+        }
+
+        /* Треки */
+        .all-tracks {
+            display: grid;
+            gap: 15px;
+        }
+
+        .track-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .track-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .music-info p {
+            margin: 5px 0;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Чарты */
+        .charts-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .chart-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .chart-item:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .chart-rank {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .chart-info {
+            flex-grow: 1;
+        }
+
+        .chart-title {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .chart-author {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .chart-plays {
+            margin-right: 15px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .play-button {
+            background: #ffd700;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-button:hover {
+            background: #ffed4a;
+            transform: scale(1.1);
+        }
+
+        .play-button.playing {
+            background: #ff4444;
+        }
+
+        /* Об авторе */
+        .about-section {
+            color: white;
+        }
+
+        .artist-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .artist-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffd700;
+        }
+
+        .artist-info h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #ffd700;
+        }
+
+        .artist-tagline {
+            font-size: 18px;
+            color: #ccc;
+            margin: 5px 0 0 0;
+        }
+
+        .about-content {
+            max-width: 800px;
+        }
+
+        .about-block {
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .about-block h2 {
+            color: #ffd700;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .about-block p {
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .about-block ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .about-block li {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .genres-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .genre-tag {
+            background: #ffd700;
+            color: #324f75;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Аналитика */
+        .analytics-panel {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            color: white;
+        }
+
+        .analytics-panel h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .analytics-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .analytics-stat {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .analytics-stat .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .analytics-stat .label {
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .top-tracks-list {
+            margin-top: 20px;
+        }
+
+        .top-track-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 8px;
+            border-radius: 5px;
+        }
+
+        .track-rank {
+            font-weight: bold;
+            color: #ffd700;
+            margin-right: 15px;
+        }
+
+        .track-name {
+            flex-grow: 1;
+        }
+
+        .track-stats {
+            color: #ccc;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        /* Скрытие элементов при поиске */
+        .track-hidden {
+            display: none !important;
+        }
+
+        /* Футер */
+        .hrunya {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #ccc;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <!-- Поиск в правом верхнем углу -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Поиск треков..." class="search-input">
+            <button onclick="performSearch()" class="search-button">🔍</button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('tisquired-tracks')">Tisquired</button>
+            <button class="tab-button" onclick="openTab('top-charts')">Топ-чарты</button>
+            <button class="tab-button" onclick="openTab('russian-chart')">Российский чарт</button>
+            <button class="tab-button" onclick="openTab('analytics')">Аналитика</button>
+        </div>
+
+        <div class="content">
+            <!-- Вкладка "Tisquired" -->
+            <div id="tisquired-tracks" class="tab-content active">
+                <div class="artist-tabs">
+                    <button class="artist-tab-button active" onclick="openArtistTab('tracks', this)">Треки</button>
+                    <button class="artist-tab-button" onclick="openArtistTab('about', this)">Об авторе</button>
+                </div>
+
+                <!-- Подвкладка "Треки" -->
+                <div id="tracks" class="artist-tab-content active">
+                    <div class="top-section">
+                        <img src="oblozska.jpg" alt="Обложка">
+                        <div class="title-section">
+                            <h1>Самые лютые биты мира!!!</h1>
+                        </div>
+                    </div>
+                    
+                    <!-- Все треки Tisquired -->
+                    <div class="all-tracks">
+                        <!-- Первый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Гиперпоп хорошечный</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Гиперпоп хорошечный" data-track-src="гиперпоп хорошечный.flac">
+                                <source src="гиперпоп хорошечный.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Второй трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Пиано проект</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Пиано проект" data-track-src="пиано проект.flac">
+                                <source src="пиано проект.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Третий трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Лоуфай так сказать (музыка для размышлений)</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Лоуфай так сказать (музыка для размышлений)" data-track-src="лоуфай так сказать (музыка для размышлений).flac">
+                                <source src="лоуфай так сказать (музыка для размышлений).flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Четвертый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Моцарт позавидует</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Моцарт позавидует" data-track-src="моцарт позавидует.flac">
+                                <source src="моцарт позавидует.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Пятый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Чилловый бит</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Чилловый бит" data-track-src="чилловый бит.flac">
+                                <source src="чилловый бит.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Шестой трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Гипертрэп какойто</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Гипертрэп какойто" data-track-src="гипертрэп какойто.flac">
+                                <source src="гипертрэп какойто.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Седьмой трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Дикий детроит</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Дикий детроит" data-track-src="дикий детроит.flac">
+                                <source src="дикий детроит.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Восьмой трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Ринтон на звонок</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Ринтон на звонок" data-track-src="ринтон на звонок.flac">
+                                <source src="ринтон на звонок.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Девятый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Биток переосмысление</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Биток переосмысление" data-track-src="биток переосмысление.flac">
+                                <source src="биток переосмысление.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Десятый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Бит в стиле артема (не получилось)</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Бит в стиле артема (не получилось)" data-track-src="Бит в стиле артема (не получилось).flac">
+                                <source src="Бит в стиле артема (не получилось).flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Одиннадцатый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Жесткая хренгь 3</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Жесткая хренгь 3" data-track-src="жесткая хренгь_3.flac">
+                                <source src="жесткая хренгь_3.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Двенадцатый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Хорошая аесня 1</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Хорошая аесня 1" data-track-src="хорошая аесня1.flac">
+                                <source src="хорошая аесня1.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Новые треки -->
+                        <!-- Тринадцатый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Супер дефолтный пхонк но уже лучше чем было раньше</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Супер дефолтный пхонк но уже лучше чем было раньше" data-track-src="супер дефолтный пхонк но уже лучше чем было раньше.flac">
+                                <source src="супер дефолтный пхонк но уже лучше чем было раньше.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Четырнадцатый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Лютая хрень</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Лютая хрень" data-track-src="лютая хрень.flac">
+                                <source src="лютая хрень.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Пятнадцатый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Качевая музло для задрипаного клуба</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Качевая музло для задрипаного клуба" data-track-src="качевая музло для задрипаного клуба.flac">
+                                <source src="качевая музло для задрипаного клуба.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+
+                        <!-- Шестнадцатый трек -->
+                        <div class="track-item">
+                            <div class="music-info">
+                                <p>Название трека: <strong>Расслабон бит</strong></p>
+                                <p>Автор: <strong>tisquired</strong></p>
+                            </div>
+                            <audio controls class="audio-player" data-track-name="Расслабон бит" data-track-src="расслабон бит.flac">
+                                <source src="расслабон бит.flac" type="audio/flac">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Подвкладка "Об авторе" -->
+                <div id="about" class="artist-tab-content">
+                    <div class="about-section">
+                        <div class="artist-header">
+                            <img src="oblozska.jpg" alt="Tisquired" class="artist-avatar">
+                            <div class="artist-info">
+                                <h1>Tisquired</h1>
+                                <p class="artist-tagline">Музыкальный продюсер и битмейкер</p>
+                            </div>
+                        </div>
+                        
+                        <div class="about-content">
+                            <div class="about-block">
+                                <h2>🎵 О творчестве</h2>
+                                <p>Tisquired - талантливый музыкант, создающий уникальные биты в различных жанрах. От LO-Fi до Hyperpop, каждый трек - это эксперимент со звуком и эмоциями.</p>
+                            </div>
+
+                            <div class="about-block">
+                                <h2>🔥 Особенности стиля</h2>
+                                <ul>
+                                    <li>Эксперименты с жанрами</li>
+                                    <li>Глубокие атмосферные текстуры</li>
+                                    <li>Инновационные звуковые решения</li>
+                                    <li>Эмоциональная насыщенность композиций</li>
+                                </ul>
+                            </div>
+
+                            <div class="about-block">
+                                <h2>📊 Статистика</h2>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <div class="stat-number">16</div>
+                                        <div class="stat-label">треков</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number">284 млн.</div>
+                                        <div class="stat-label">макс. прослушиваний</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number">7</div>
+                                        <div class="stat-label">жанров</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="about-block">
+                                <h2>🎶 Любимые жанры</h2>
+                                <div class="genres-list">
+                                    <span class="genre-tag">Hyperpop</span>
+                                    <span class="genre-tag">Lo-Fi</span>
+                                    <span class="genre-tag">Trap</span>
+                                    <span class="genre-tag">Phonk</span>
+                                    <span class="genre-tag">Экспериментальный</span>
+                                    <span class="genre-tag">Электроника</span>
+                                    <span class="genre-tag">Club</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка "Топ-чарты" -->
+            <div id="top-charts" class="tab-content">
+                <div class="top-section">
+                    <h1>Топ-чарты</h1>
+                </div>
+                
+                <div class="charts-list">
+                    <div class="chart-item">
+                        <div class="chart-rank">1</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Гиперпоп хорошечный</div>
+                            <div class="chart-author">tisquired</div>
+                        </div>
+                        <div class="chart-plays">🔥 207 млн. прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('гиперпоп хорошечный', this)">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">2</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Дикий детроит</div>
+                            <div class="chart-author">tisquired</div>
+                        </div>
+                        <div class="chart-plays">🔥 43 млн. прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('дикий детроит', this)">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">3</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Лоуфай так сказать</div>
+                            <div class="chart-author">tisquired</div>
+                        </div>
+                        <div class="chart-plays">🔥 5 млн. прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('лоуфай так сказать (музыка для размышлений)', this)">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">4</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Чилловый бит</div>
+                            <div class="chart-author">tisquired</div>
+                        </div>
+                        <div class="chart-plays">🔥 3 млн. прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('чилловый бит', this)">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">5</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Моцарт позавидует</div>
+                            <div class="chart-author">tisquired</div>
+                        </div>
+                        <div class="chart-plays">🔥 1.276.338 прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('моцарт позавидует', this)">▶️</button>
+                    </div>
+                </div>
+
+                <!-- Скрытый аудиоплеер для топ-чартов -->
+                <div style="display: none;">
+                    <audio id="chart-audio-player" controls>
+                        Ваш браузер не поддерживает аудио элемент.
+                    </audio>
+                </div>
+            </div>
+
+            <!-- Вкладка "Российский чарт" -->
+            <div id="russian-chart" class="tab-content">
+                <div class="top-section">
+                    <h1>Российский чарт</h1>
+                </div>
+                
+                <div class="charts-list">
+                    <div class="chart-item">
+                        <div class="chart-rank">1</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Шелк</div>
+                            <div class="chart-author">Ваня Дмитриенко</div>
+                        </div>
+                        <div class="chart-plays">🔥 415 прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('Vanya_Dmitrienko_-_SHyolk_(SkySound.cc)', this, 'mp3')">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">2</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Наследство</div>
+                            <div class="chart-author">ICEGERGERT</div>
+                        </div>
+                        <div class="chart-plays">🔥 315 прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('ICEGERGERT, SKY RAE - Наследство (новая музыка 2025)', this, 'mp3')">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">3</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Базовый минимум</div>
+                            <div class="chart-author">MIA BOYKA, SABI</div>
+                        </div>
+                        <div class="chart-plays">🔥 298 прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('SABI, MIA BOYKA - Базовый минимум', this, 'mp3')">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">4</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Кухни</div>
+                            <div class="chart-author">Бонд с кнопкой</div>
+                        </div>
+                        <div class="chart-plays">🔥 287 прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('Бонд с кнопкой - Кухни', this, 'mp3')">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">5</div>
+                        <div class="chart-info">
+                            <div class="chart-title">Пусто</div>
+                            <div class="chart-author">V $ X V PRiNCE, BOLLO</div>
+                        </div>
+                        <div class="chart-plays">🔥 265 прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('V $ X V PRiNCE, BOLLO - Пусто', this, 'mp3')">▶️</button>
+                    </div>
+
+                    <div class="chart-item">
+                        <div class="chart-rank">6</div>
+                        <div class="chart-info">
+                            <div class="chart-title">10</div>
+                            <div class="chart-author">Эндшпиль</div>
+                        </div>
+                        <div class="chart-plays">🔥 243 прослушиваний</div>
+                        <button class="play-button" onclick="toggleTrack('Эндшпиль - 10', this, 'mp3')">▶️</button>
+                    </div>
+                </div>
+
+                <!-- Скрытый аудиоплеер для российского чарта -->
+                <div style="display: none;">
+                    <audio id="russian-chart-audio-player" controls>
+                        Ваш браузер не поддерживает аудио элемент.
+                    </audio>
+                </div>
+            </div>
+
+            <!-- Вкладка "Аналитика" -->
+            <div id="analytics" class="tab-content">
+                <div class="top-section">
+                    <h1>📊 Статистика прослушиваний</h1>
+                </div>
+                
+                <div class="analytics-panel">
+                    <div class="analytics-stats">
+                        <div class="analytics-stat">
+                            <div class="number" id="totalPlays">0</div>
+                            <div class="label">Всего прослушиваний</div>
+                        </div>
+                        <div class="analytics-stat">
+                            <div class="number" id="uniqueTracks">0</div>
+                            <div class="label">Уникальных треков</div>
+                        </div>
+                        <div class="analytics-stat">
+                            <div class="number" id="avgDuration">0</div>
+                            <div class="label">Ср. время (сек)</div>
+                        </div>
+                        <div class="analytics-stat">
+                            <div class="number" id="completionRate">0%</div>
+                            <div class="label">Доля полных прослушиваний</div>
+                        </div>
+                    </div>
+
+                    <h3>🔥 Самые популярные треки</h3>
+                    <div class="top-tracks-list" id="topTracksList">
+                        <!-- Список заполнится через JavaScript -->
+                    </div>
+
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button onclick="exportAnalytics()" class="search-button">📥 Экспорт данных</button>
+                        <button onclick="resetAnalytics()" class="search-button" style="background: #ff4444; margin-left: 10px;">🔄 Сбросить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hrunya">
+        ©2025 tisquired productions
+    </div>
+
+    <script>
+        // ==================== СИСТЕМА АНАЛИТИКИ ====================
+        
+        const listeningStats = {
+            tracks: {},
+            totalPlays: 0,
+            totalDuration: 0,
+            sessionStart: new Date().toISOString(),
+            completions: 0
+        };
+
+        // Обновление аналитики для трека
+        function updateAnalyticsForTrack(trackName) {
+            if (!listeningStats.tracks[trackName]) {
+                listeningStats.tracks[trackName] = {
+                    plays: 0,
+                    totalDuration: 0,
+                    completions: 0,
+                    lastPlayed: null
+                };
+            }
+            
+            listeningStats.tracks[trackName].plays++;
+            listeningStats.tracks[trackName].lastPlayed = new Date().toISOString();
+            listeningStats.totalPlays++;
+            
+            saveStats();
+            updateAnalyticsDisplay();
+        }
+
+        // Загрузка статистики из localStorage
+        function loadStats() {
+            const saved = localStorage.getItem('musicAnalytics');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                Object.assign(listeningStats, parsed);
+            }
+            updateAnalyticsDisplay();
+        }
+
+        // Сохранение статистики
+        function saveStats() {
+            localStorage.setItem('musicAnalytics', JSON.stringify(listeningStats));
+        }
+
+        // Обновление отображения аналитики
+        function updateAnalyticsDisplay() {
+            if (document.getElementById('analytics').classList.contains('active')) {
+                document.getElementById('totalPlays').textContent = listeningStats.totalPlays;
+                document.getElementById('uniqueTracks').textContent = Object.keys(listeningStats.tracks).length;
+                
+                const avgDuration = listeningStats.totalPlays > 0 ? 
+                    Math.round(listeningStats.totalDuration / listeningStats.totalPlays) : 0;
+                document.getElementById('avgDuration').textContent = avgDuration;
+                
+                const completionRate = listeningStats.totalPlays > 0 ? 
+                    Math.round((listeningStats.completions / listeningStats.totalPlays) * 100) : 0;
+                document.getElementById('completionRate').textContent = completionRate + '%';
+
+                updateTopTracksList();
+            }
+        }
+
+        // Обновление списка топ-треков
+        function updateTopTracksList() {
+            const topTracksList = document.getElementById('topTracksList');
+            const tracks = Object.entries(listeningStats.tracks)
+                .sort(([,a], [,b]) => b.plays - a.plays)
+                .slice(0, 10);
+            
+            topTracksList.innerHTML = '';
+            
+            tracks.forEach(([trackName, stats], index) => {
+                const avgDuration = stats.plays > 0 ? Math.round(stats.totalDuration / stats.plays) : 0;
+                const completionRate = stats.plays > 0 ? Math.round((stats.completions / stats.plays) * 100) : 0;
+                
+                const trackItem = document.createElement('div');
+                trackItem.className = 'top-track-item';
+                trackItem.innerHTML = `
+                    <div class="track-rank">${index + 1}</div>
+                    <div class="track-name">
+                        <strong>${trackName}</strong>
+                        <div style="font-size: 12px; color: #888;">
+                            ${stats.lastPlayed ? 'Посл. прослушивание: ' + new Date(stats.lastPlayed).toLocaleDateString() : ''}
+                        </div>
+                    </div>
+                    <div class="track-stats">
+                        <div>🎵 ${stats.plays} прослушиваний</div>
+                        <div>⏱ ${avgDuration} сек в среднем</div>
+                        <div>✅ ${completionRate}% полных прослушиваний</div>
+                    </div>
+                `;
+                topTracksList.appendChild(trackItem);
+            });
+        }
+
+        // Экспорт данных
+        function exportAnalytics() {
+            const dataStr = JSON.stringify(listeningStats, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `music-analytics-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        // Сброс аналитики
+        function resetAnalytics() {
+            if (confirm('Вы уверены, что хотите сбросить всю статистику? Это действие нельзя отменить.')) {
+                localStorage.removeItem('musicAnalytics');
+                Object.assign(listeningStats, {
+                    tracks: {},
+                    totalPlays: 0,
+                    totalDuration: 0,
+                    completions: 0,
+                    sessionStart: new Date().toISOString()
+                });
+                updateAnalyticsDisplay();
+                alert('Статистика сброшена!');
+            }
+        }
+
+        // ==================== ОРИГИНАЛЬНЫЙ ФУНКЦИОНАЛ ====================
+
+        let currentPlayingButton = null;
+        let currentTrackName = null;
+
+        // Функция поиска треков
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const trackItems = document.querySelectorAll('#tracks .track-item');
+            
+            console.log('Поиск по запросу:', searchTerm);
+            console.log('Найдено треков:', trackItems.length);
+
+            if (searchTerm === '') {
+                // Показать все треки если поиск пустой
+                trackItems.forEach(item => {
+                    item.classList.remove('track-hidden');
+                });
+                return;
+            }
+
+            let foundAny = false;
+
+            // Скрыть все треки
+            trackItems.forEach(item => {
+                item.classList.add('track-hidden');
+            });
+
+            // Показать только соответствующие поиску
+            trackItems.forEach(item => {
+                const trackName = item.querySelector('strong').textContent.toLowerCase();
+                const author = item.querySelector('.music-info').textContent.toLowerCase();
+                
+                console.log('Проверка трека:', trackName);
+                
+                if (trackName.includes(searchTerm) || author.includes(searchTerm)) {
+                    item.classList.remove('track-hidden');
+                    foundAny = true;
+                    console.log('Найден трек:', trackName);
+                }
+            });
+
+            if (!foundAny) {
+                console.log('Ничего не найдено');
+            }
+        }
+
+        // Поиск при нажатии Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Поиск при каждом вводе
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            performSearch();
+        });
+
+        // Функция для переключения вкладок
+        function openTab(tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => button.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            // Сбросить поиск при переключении вкладок
+            document.getElementById('searchInput').value = '';
+            // Восстановить отображение всех треков
+            const trackItems = document.querySelectorAll('.track-item');
+            trackItems.forEach(item => {
+                item.classList.remove('track-hidden');
+            });
+
+            // Обновляем аналитику при переходе на вкладку
+            if (tabName === 'analytics') {
+                updateAnalyticsDisplay();
+            }
+        }
+
+        // Функция для переключения подвкладок в Tisquired
+        function openArtistTab(tabName, button) {
+            const artistTabContents = document.querySelectorAll('.artist-tab-content');
+            const artistTabButtons = document.querySelectorAll('.artist-tab-button');
+            
+            console.log('Переключение на вкладку:', tabName);
+            
+            // Скрыть все подвкладки
+            artistTabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Убрать активный класс со всех кнопок
+            artistTabButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Показать выбранную подвкладку
+            document.getElementById(tabName).classList.add('active');
+            button.classList.add('active');
+        }
+
+        // Функция для воспроизведения/паузы трека из чартов
+        function toggleTrack(trackName, button, format = 'flac') {
+            let chartAudioPlayer;
+            
+            // Определяем какой плеер использовать в зависимости от вкладки
+            if (document.getElementById('russian-chart').classList.contains('active')) {
+                chartAudioPlayer = document.getElementById('russian-chart-audio-player');
+            } else {
+                chartAudioPlayer = document.getElementById('chart-audio-player');
+            }
+            
+            const audioPlayers = document.querySelectorAll('.audio-player');
+
+            // Если это тот же трек, что играет сейчас - ставим на паузу или возобновляем
+            if (currentTrackName === trackName && !chartAudioPlayer.paused) {
+                chartAudioPlayer.pause();
+                button.textContent = '▶️';
+                button.classList.remove('playing');
+                currentPlayingButton = null;
+                currentTrackName = null;
+                return;
+            }
+
+            // Останавливаем все другие плееры
+            audioPlayers.forEach(player => {
+                if (!player.paused) {
+                    player.pause();
+                    player.currentTime = 0;
+                }
+            });
+
+            // Останавливаем другой чарт-плеер если он играет
+            const otherChartPlayer = chartAudioPlayer.id === 'chart-audio-player' 
+                ? document.getElementById('russian-chart-audio-player')
+                : document.getElementById('chart-audio-player');
+            if (!otherChartPlayer.paused) {
+                otherChartPlayer.pause();
+                otherChartPlayer.currentTime = 0;
+            }
+
+            // Сбрасываем предыдущую кнопку
+            if (currentPlayingButton && currentPlayingButton !== button) {
+                currentPlayingButton.textContent = '▶️';
+                currentPlayingButton.classList.remove('playing');
+            }
+
+            // Устанавливаем источник и воспроизводим
+            chartAudioPlayer.innerHTML = `<source src="${trackName}.${format}" type="audio/${format === 'mp3' ? 'mpeg' : format}">`;
+            chartAudioPlayer.load();
+            
+            chartAudioPlayer.play().then(() => {
+                button.textContent = '⏸️';
+                button.classList.add('playing');
+                currentPlayingButton = button;
+                currentTrackName = trackName;
+                updateAnalyticsForTrack(trackName);
+            }).catch(e => {
+                console.log('Ошибка воспроизведения:', e);
+            });
+
+            // Обработчик окончания трека
+            chartAudioPlayer.onended = function() {
+                if (currentPlayingButton) {
+                    currentPlayingButton.textContent = '▶️';
+                    currentPlayingButton.classList.remove('playing');
+                    currentPlayingButton = null;
+                    currentTrackName = null;
+                }
+            };
+
+            // Обработчик паузы
+            chartAudioPlayer.onpause = function() {
+                if (currentPlayingButton && currentTrackName === trackName) {
+                    currentPlayingButton.textContent = '▶️';
+                    currentPlayingButton.classList.remove('playing');
+                }
+            };
+
+            // Обработчик воспроизведения
+            chartAudioPlayer.onplay = function() {
+                if (currentPlayingButton && currentTrackName === trackName) {
+                    currentPlayingButton.textContent = '⏸️';
+                    currentPlayingButton.classList.add('playing');
+                }
+            };
+        }
+
+        // Обработчики для обычных аудиоплееров
+        const audioPlayers = document.querySelectorAll('.audio-player');
+        audioPlayers.forEach(player => {
+            player.addEventListener('play', function() {
+                // Сбрасываем кнопку в чартах если играет обычный плеер
+                if (currentPlayingButton) {
+                    currentPlayingButton.textContent = '▶️';
+                    currentPlayingButton.classList.remove('playing');
+                    currentPlayingButton = null;
+                    currentTrackName = null;
+                }
+                
+                // Останавливаем все другие плееры
+                audioPlayers.forEach(otherPlayer => {
+                    if (otherPlayer !== player && !otherPlayer.paused) {
+                        otherPlayer.pause();
+                        otherPlayer.currentTime = 0;
+                    }
+                });
+
+                // Останавливаем чарт-плееры
+                document.getElementById('chart-audio-player').pause();
+                document.getElementById('russian-chart-audio-player').pause();
+                
+                // Обновляем аналитику
+                const trackName = this.getAttribute('data-track-name');
+                if (trackName) {
+                    updateAnalyticsForTrack(trackName);
+                }
+            });
+        });
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+        });
+    </script>
+</body>
+</html>
